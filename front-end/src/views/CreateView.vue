@@ -1,6 +1,6 @@
 <template>
     <div>
-        <form @submit.prevent="login">
+        <form @submit.prevent="create">
             <div class="form-group">
                 <label for="email">Email</label>
                 <input v-model="email" type="text" class="form-control" id="email">
@@ -11,7 +11,7 @@
             </div>
             <div class="my-3">
                 <button type="submit" class="btn btn-primary">
-                    Login
+                    Create
                 </button>
             </div>
         </form>
@@ -27,22 +27,20 @@ export default {
     };
   },
   methods: {
-    async login() {
+    async create() {
       try {
-        const req = await fetch('http://localhost:3000/api/users/login', {
-          method: 'POST',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
+        const req = await fetch('http://localhost:3000/api/users', {
+    method: "POST", 
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
             email: this.email,
             password: this.password,
-          }),
-        });
-        const data = await req.json();
-        console.log(data); // Handle the response data as needed
-        // Assuming your API returns a success flag
+    }),
+  })
+  const data = await req.json()
         if (req.status == 200) {
           // Redirect to another route upon successful login
           this.$router.push('/dashboard'); // Replace '/dashboard' with your desired route
