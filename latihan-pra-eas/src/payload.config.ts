@@ -10,6 +10,7 @@ import Users from './collections/Users'
 import Chats from './collections/Chats'
 import Channels from './collections/Channels'
 
+
 export default buildConfig({
   serverURL: process.env.PUBLIC_SERVER_URL,
   admin: {

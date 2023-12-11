@@ -6,11 +6,14 @@ const Users: CollectionConfig = {
   admin: {
     useAsTitle: 'email',
   },
+  access: {
+    create: () => true
+  },
   fields: [
     {
       name: 'name',
       type: 'text',
-      required: true
+      required: false
     }
   ],
 }
