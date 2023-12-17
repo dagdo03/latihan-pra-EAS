@@ -13,8 +13,8 @@ const Channels: CollectionConfig = {
   fields: [
     {
       name: 'author',
-      type: 'relationship',
-      relationTo: "users",
+      type: 'text',
+      required: true
     },
     {
         name: 'channel',

@@ -8,6 +8,7 @@
 
     <form @submit.prevent="createChannel">
         <div class="form-group">
+            <!-- <input type="hidden" name="authorEmail" id="authorEmail" v-model="authorEmail"> -->
               <input v-model="channelName" type="text" class="form-control" id="channelName">
               <button @click="createChannel" class="btn btn-success">
                   Create Channel
@@ -23,7 +24,8 @@
 export default {
   data() {
     return {
-      channelName: '',
+      authorEmail: '',
+      channelName: ''
     };
   },
   methods: {
@@ -50,18 +52,30 @@ export default {
     },
     async createChannel(){
       try {
-        const req = await fetch('http://localhost:3000/api/channels', {
-          method: 'POST',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-          title: "New page",
-          }),
-        });
-        const data = await req.json();
-          console.log(data); // Handle the response data as needed
+        const userReq = await fetch('http://localhost:3000/api/users/me', {
+        method: "GET", 
+        credentials: "include",
+        headers: {
+                  "Content-Type": "application/json",
+        },
+        })
+        const userData = await userReq.json();
+        const authorId = userData.user.id;
+        const authorEmail = userData.user.email;
+        console.log(authorEmail);
+        // const req = await fetch('http://localhost:3000/api/channels', {
+        //   method: 'POST',
+        //   credentials: 'include',
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //   },
+        //   body: JSON.stringify({
+        //     author: authorEmail,
+        //     channel: this.channelName,
+        //   }),
+        // });
+        // const data = await req.json();
+        // console.log(data); // Handle the response data as needed
         // if (req.ok) {
 
         //   // Assuming your API returns a success flag
