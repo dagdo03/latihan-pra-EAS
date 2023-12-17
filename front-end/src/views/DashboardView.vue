@@ -10,7 +10,7 @@
         <div class="form-group">
             <!-- <input type="hidden" name="authorEmail" id="authorEmail" v-model="authorEmail"> -->
               <input v-model="channelName" type="text" class="form-control" id="channelName">
-              <button @click="createChannel" class="btn btn-success">
+              <button class="btn btn-success">
                   Create Channel
               </button>
         </div>
@@ -24,7 +24,8 @@
 export default {
   data() {
     return {
-      authorEmail: '',
+      // authorEmail: '',
+      servers: [],
       channelName: ''
     };
   },
@@ -61,31 +62,29 @@ export default {
         })
         const userData = await userReq.json();
         const authorId = userData.user.id;
-        const authorEmail = userData.user.email;
-        console.log(authorEmail);
-        // const req = await fetch('http://localhost:3000/api/channels', {
-        //   method: 'POST',
-        //   credentials: 'include',
-        //   headers: {
-        //     'Content-Type': 'application/json',
-        //   },
-        //   body: JSON.stringify({
-        //     author: authorEmail,
-        //     channel: this.channelName,
-        //   }),
-        // });
-        // const data = await req.json();
-        // console.log(data); // Handle the response data as needed
-        // if (req.ok) {
-
-        //   // Assuming your API returns a success flag
-        //   // Redirect to another route upon successful login
-        //   this.$router.push('/login'); // Replace '/dashboard' with your desired route
-        // }
+        // const authorEmail = userData.user.email;
+        // console.log(authorEmail);
+        const req = await fetch('http://localhost:3000/api/servers', {
+          method: 'POST',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            author: authorId,
+            name: this.channelName,
+          }),
+        });
+        const data = await req.json();
+        console.log(data);
       } catch (err) {
         console.log(err);
       }
-    }
+    },
+    goToServerRoute(serverName) {
+      // Assuming you have a route named 'server' to display server details
+      this.$router.push(`/server/${serverName}`);
+    },
   },
 };
 </script>

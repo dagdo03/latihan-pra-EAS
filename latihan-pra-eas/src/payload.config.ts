@@ -9,6 +9,7 @@ import { buildConfig } from 'payload/config'
 import Users from './collections/Users'
 import Chats from './collections/Chats'
 import Channels from './collections/Channels'
+import Servers from './collections/Servers'
 
 
 export default buildConfig({
@@ -20,7 +21,7 @@ export default buildConfig({
   cors: ['http://localhost:5173'],
   csrf: ['http://localhost:5173'],
   editor: slateEditor({}),
-  collections: [Users, Chats, Channels],
+  collections: [Users, Chats,  Servers],
   typescript: {
     outputFile: path.resolve(__dirname, 'payload-types.ts'),
   },

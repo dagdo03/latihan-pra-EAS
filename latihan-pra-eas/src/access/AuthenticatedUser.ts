@@ -5,5 +5,9 @@ export const AuthenticatedUser: Access = ({ req: { user } }) => {
   if (!user) {
     return false
   }
-  return true
+  return {
+    id: {
+      equals: user.id
+    }
+  }
 }

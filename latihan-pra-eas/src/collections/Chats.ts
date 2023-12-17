@@ -4,12 +4,12 @@ const Chats: CollectionConfig = {
   slug: 'chats',
   auth: true,
   admin: {
-    useAsTitle: 'email',
+    useAsTitle: 'id',
   },
   fields: [
     {
         name: 'message',
-        type: 'text',
+        type: 'textarea',
         required: false
     }
   ],

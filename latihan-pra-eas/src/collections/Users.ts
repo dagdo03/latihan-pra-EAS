@@ -11,9 +11,14 @@ const Users: CollectionConfig = {
   },
   fields: [
     {
+      name: 'email',
+      type: 'email',
+      unique: true, // Ensure email uniqueness
+    },
+    {
       name: 'name',
       type: 'text',
-      required: false
+      required: true
     }
   ],
 }

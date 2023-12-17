@@ -1,5 +1,6 @@
 import { CollectionConfig } from 'payload/types'
 import { AuthenticatedUser } from '../access/AuthenticatedUser'
+import Users from './Users'
 
 const Channels: CollectionConfig = {
   slug: 'channels',
@@ -11,15 +12,17 @@ const Channels: CollectionConfig = {
     read: () => true
   },
   fields: [
-    {
-      name: 'author',
-      type: 'text',
-      required: true
-    },
+    // {
+    //   name: 'author',
+    //   type: 'relationship',
+    //   relationTo: 'users',
+      
+    // },
     {
         name: 'channel',
         type: 'text',
-        required: false
+        required: true,
+        
     }
   ],
 }
