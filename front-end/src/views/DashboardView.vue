@@ -7,27 +7,36 @@
     </div>
 
     <form @submit.prevent="createChannel">
-        <div class="form-group">
-            <!-- <input type="hidden" name="authorEmail" id="authorEmail" v-model="authorEmail"> -->
-              <input v-model="channelName" type="text" class="form-control" id="channelName">
-              <button class="btn btn-success">
-                  Create Channel
-              </button>
-        </div>
+      <div class="form-group">
+        <input v-model="channelName" type="text" class="form-control" id="channelName" />
+        <button class="btn btn-success">
+          Create Channel
+        </button>
+      </div>
     </form>
-
+    <div>
+      <p>Channels:</p>
+      <div v-for="serverGroup in servers" :key="serverGroup[0].id">
+        <div v-for="item in serverGroup" :key="item.id">
+          <router-link :to="{name: 'chats', params:{channelId:item.id}}">
+            <h5>{{ item.channel }}</h5>
+          </router-link>
+        </div>
+      </div>
+  </div>
   </div>
 </template>
-
 
 <script>
 export default {
   data() {
     return {
-      // authorEmail: '',
       servers: [],
-      channelName: ''
+      channelName: '',
     };
+  },
+  created() {
+    this.getChannel();
   },
   methods: {
     async logout() {
@@ -40,31 +49,30 @@ export default {
           },
         });
         const data = await req.json();
-          console.log(data); // Handle the response data as needed
-        if (req.ok) {
+        console.log(data);
 
-          // Assuming your API returns a success flag
-          // Redirect to another route upon successful login
-          this.$router.push('/login'); // Replace '/dashboard' with your desired route
+        if (req.ok) {
+          this.$router.push('/login');
         }
       } catch (err) {
         console.log(err);
       }
     },
-    async createChannel(){
+    async createChannel() {
       try {
+        this.loading = true;
         const userReq = await fetch('http://localhost:3000/api/users/me', {
-        method: "GET", 
-        credentials: "include",
-        headers: {
-                  "Content-Type": "application/json",
-        },
-        })
+          method: 'GET',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
         const userData = await userReq.json();
         const authorId = userData.user.id;
-        // const authorEmail = userData.user.email;
-        // console.log(authorEmail);
-        const req = await fetch('http://localhost:3000/api/servers', {
+
+        const req = await fetch('http://localhost:3000/api/channels', {
           method: 'POST',
           credentials: 'include',
           headers: {
@@ -72,19 +80,54 @@ export default {
           },
           body: JSON.stringify({
             author: authorId,
-            name: this.channelName,
+            channel: this.channelName,
           }),
         });
+
         const data = await req.json();
-        console.log(data);
+        if (req.ok) {
+          console.log(data);
+        }
+        
       } catch (err) {
         console.log(err);
       }
     },
-    goToServerRoute(serverName) {
-      // Assuming you have a route named 'server' to display server details
-      this.$router.push(`/server/${serverName}`);
+    async getChannel() {
+      try {
+        const req = await fetch('http://localhost:3000/api/channels', {
+          method: 'GET',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        const data = await req.json();
+        // console.log(data);
+        console.log(this.servers);
+        this.servers.push(data.docs)
+      } catch (err) {
+        console.log(err);
+      }
     },
+    async getChannelId(){
+            try {
+        const req = await fetch('http://localhost:3000/api/channels/' + this.$route.params.channelId, {
+          method: 'GET',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        const data = await req.json();
+        console.log(data);
+        console.log(this.servers);
+      } catch (err) {
+        console.log(err);
+      }
+        }
   },
 };
 </script>

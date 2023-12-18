@@ -25,6 +25,15 @@ const router = createRouter({
       component: () => import('../views/CreateView.vue')
     },
     {
+      path: '/chats/:channelId',
+      name: 'chats',
+      component: () => import('../views/ChatView.vue'),
+      meta: {
+        requiresAuth: true,
+        title: 'Chat'
+      }
+    },
+    {
       path: '/about',
       name: 'about',
       // route level code-splitting
