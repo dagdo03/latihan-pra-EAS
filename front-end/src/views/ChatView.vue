@@ -9,6 +9,7 @@
       <p>Chats:</p>
       <div v-for="chatGroup in chats" :key="chatGroup[0].id">
         <div v-for="item in chatGroup" :key="item.id">
+            <h5 v-if="item.channel.id === this.$route.params.channelId">{{ item.author.name }} <h6>{{ item.author.createdAt }}</h6> :</h5>
             <h5 v-if="item.channel.id === this.$route.params.channelId">{{ item.message }}</h5>
         </div>
       </div>
