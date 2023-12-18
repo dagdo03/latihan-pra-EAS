@@ -9,7 +9,7 @@
       <p>Chats:</p>
       <div v-for="chatGroup in chats" :key="chatGroup[0].id">
         <div v-for="item in chatGroup" :key="item.id">
-            <h5>{{ item.message }}</h5>
+            <h5 v-if="item.channel.id === this.$route.params.channelId">{{ item.message }}</h5>
         </div>
       </div>
   </div>
@@ -22,6 +22,9 @@
                 chats: [],
                 chatText: '',
             };
+        },
+        created(){
+            this.getChat();
         },
         methods: {
             async sendChat(){
@@ -71,7 +74,21 @@
                 }
         },
         async getChat(){
-            
+        try {
+                const req = await fetch('http://localhost:3000/api/chats', {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                        'Content-Type': 'application/json',
+                },
+            });
+            const data = await req.json();
+            this.chats.push(data.docs);
+            console.log(this.chats)
+            }
+            catch (err){
+                console.log(err);
+            }
         }
     }
 }
