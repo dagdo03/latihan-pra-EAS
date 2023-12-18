@@ -25,13 +25,13 @@ const Channels: CollectionConfig = {
         required: true,
         
     },
-    {
-      name: 'message',
-      type: 'relationship',
-      relationTo: 'users',
-      hasMany: true
+    // {
+    //   name: 'message',
+    //   type: 'relationship',
+    //   relationTo: 'users',
+    //   hasMany: true
       
-  }
+    // }
   ],
   endpoints: [
     {
